@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import WidgetPanel from '../components/WidgetPanel';
 import { Col, Row, Button, Input, Container } from '../styled/styled';
 import { Global, css } from '@emotion/core';
-import { encodeQueryData } from '../utils/params';
 
 declare global {
   interface Window {
@@ -15,6 +14,16 @@ const Home = () => {
   const [apiUrl, setApiUrl] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
   const [eventSlug, setEventSlug] = useState<string>('');
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('event');
+    const api = urlParams.get('api');
+    if (slug && api) {
+      setEventSlug(slug);
+      setApiUrl(api);
+    }
+  }, []);
 
   useEffect(() => {
     if (!apiUrl) return;
@@ -46,22 +55,11 @@ const Home = () => {
     document.title = 'widget-testing | ' + eventSlug;
   }, [eventSlug]);
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const slug = urlParams.get('event');
-    const api = urlParams.get('api');
-    if (slug && api) {
-      setEventSlug(slug);
-      setApiUrl(api);
-    }
-  }, []);
-
   const clickInput = (): void => {
     if (!userInput) return;
     const parsedInput = userInput.split('/');
     setApiUrl(parsedInput[2]);
     setEventSlug(parsedInput[3]);
-    window.history.replaceState(null, null, '?' + encodeQueryData({ api: parsedInput[2], event: parsedInput[3] }));
   };
 
   return (
@@ -93,7 +91,7 @@ const Home = () => {
               <br />
               <br />
               <br />
-              <WidgetPanel eventSlug={eventSlug} />
+              <WidgetPanel eventSlug={eventSlug} apiUrl={apiUrl} />
             </>
           )}
         </Col>
