@@ -61,7 +61,7 @@ const Home = () => {
     const parsedInput = userInput.split('/');
     setApiUrl(parsedInput[2]);
     setEventSlug(parsedInput[3]);
-    window.history.replaceState(null, null, '?' + encodeQueryData({ event: parsedInput[3], api: parsedInput[2] }));
+    window.history.replaceState(null, null, '?' + encodeQueryData({ api: parsedInput[2], event: parsedInput[3] }));
   };
 
   return (
