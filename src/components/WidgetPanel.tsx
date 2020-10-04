@@ -41,7 +41,7 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
       keepShopping: keepShopping.toString(),
     };
     window.history.replaceState(null, null, '?' + encodeQueryData(params));
-  }, [darkTheme, keepShopping, hex]);
+  }, [apiUrl, eventSlug, darkTheme, keepShopping, hex]);
 
   return (
     <>
