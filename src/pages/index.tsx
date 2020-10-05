@@ -67,6 +67,10 @@ const Home = () => {
     <>
       <Global
         styles={css`
+          * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
           body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
