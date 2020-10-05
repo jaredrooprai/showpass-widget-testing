@@ -5,9 +5,9 @@ import WidgetButton from './WidgetButton';
 type queryData = {
   api: string;
   event: string;
-  hexColor: string;
-  darkTheme: string;
-  keepShopping: string;
+  hex: string;
+  ['theme-dark']: string;
+  ['keep-shopping']: string;
 };
 
 const encodeQueryData = (data: queryData): String => {
@@ -28,9 +28,9 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const dt = urlParams.get('darkTheme');
-    const ks = urlParams.get('keepShopping');
-    const hx = urlParams.get('hexColor');
+    const dt = urlParams.get('theme-dark');
+    const ks = urlParams.get('keep-shopping');
+    const hx = urlParams.get('hex');
     dt && setDarkTheme(dt === 'true');
     ks && setKeepShopping(ks === 'true');
     hx && setHex(hx);
@@ -41,9 +41,9 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
     const params: queryData = {
       api: apiUrl,
       event: eventSlug,
-      hexColor: hex,
-      darkTheme: darkTheme.toString(),
-      keepShopping: keepShopping.toString(),
+      hex: hex,
+      ['theme-dark']: darkTheme.toString(),
+      ['keep-shopping']: keepShopping.toString(),
     };
     window.history.replaceState(null, null, '?' + encodeQueryData(params));
   }, [apiUrl, eventSlug, darkTheme, keepShopping, hex]);
