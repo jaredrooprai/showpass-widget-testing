@@ -22,6 +22,7 @@ const Home = () => {
     if (slug && api) {
       setEventSlug(slug);
       setApiUrl(api);
+      setUserInput(`https://${api}/${slug}/`);
     }
   }, []);
 

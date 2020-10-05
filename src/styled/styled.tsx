@@ -19,4 +19,7 @@ export const Button = styled.button`
 export const Input = styled.input`
   width: 100%;
   max-width: 400px;
+  ::placeholder {
+    color: #a9a9a9;
+  }
 `;
