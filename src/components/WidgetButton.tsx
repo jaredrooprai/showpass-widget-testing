@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../styled/styled';
+import { Button } from '../styled';
 
 interface WidgetButtonProps {
   eventSlug: string;

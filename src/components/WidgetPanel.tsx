@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Row } from '../styled/styled';
+import { Input, Row, ButtonSpacer } from '../styled';
 import WidgetButton from './WidgetButton';
-import { encodeQueryData } from '../utils/params';
 
 type queryData = {
   api: string;
@@ -9,6 +8,12 @@ type queryData = {
   hexColor: string;
   darkTheme: string;
   keepShopping: string;
+};
+
+const encodeQueryData = (data: queryData): String => {
+  const ret = [];
+  for (let d in data) ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+  return ret.join('&');
 };
 
 interface WidgetPanelProps {
@@ -69,7 +74,7 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
           style={{ cursor: 'pointer' }}
         ></input>
       </Row>
-      <br />
+      <div style={{ height: '20px' }}></div>
       <Row>
         <WidgetButton
           eventSlug={eventSlug}
@@ -78,6 +83,7 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
           keepShopping={keepShopping}
           type="eventPurchaseWidget"
         />
+        <ButtonSpacer />
         <WidgetButton
           eventSlug={eventSlug}
           hex={hex}

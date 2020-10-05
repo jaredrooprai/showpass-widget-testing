@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import WidgetPanel from '../components/WidgetPanel';
-import { Col, Row, Button, Input, Container } from '../styled/styled';
+import { Col, Row, Button, Input, Container, ButtonSpacer } from '../styled';
 import { Global, css } from '@emotion/core';
 
 declare global {
@@ -89,13 +89,12 @@ const Home = () => {
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
             />
+            <ButtonSpacer />
             <Button onClick={clickInput}>Create</Button>
           </Row>
           {eventSlug && (
             <>
-              <br />
-              <br />
-              <br />
+              <div style={{ height: '40px' }}></div>
               <WidgetPanel eventSlug={eventSlug} apiUrl={apiUrl} />
             </>
           )}
