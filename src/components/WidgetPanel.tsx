@@ -88,7 +88,7 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
       <div style={{ height: '20px' }}></div>
       <Row>
         <WidgetButton
-          eventSlug={eventSlug}
+          id={eventSlug}
           hex={hex}
           darkTheme={darkTheme}
           keepShopping={keepShopping}
@@ -96,7 +96,7 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
         />
         <ButtonSpacer />
         <WidgetButton
-          eventSlug={eventSlug}
+          id={eventSlug}
           hex={hex}
           darkTheme={darkTheme}
           keepShopping={keepShopping}
@@ -104,7 +104,7 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
         />
         <ButtonSpacer />
         <WidgetButton
-          eventSlug={venue}
+          id={venue}
           hex={hex}
           darkTheme={darkTheme}
           keepShopping={keepShopping}
