@@ -25,6 +25,7 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
   const [hex, setHex] = useState<string>('#dd3333');
   const [darkTheme, setDarkTheme] = useState<boolean>(false);
   const [keepShopping, setKeepShopping] = useState<boolean>(false);
+  const [venue, setVenue] = useState('');
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -74,6 +75,16 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
           style={{ cursor: 'pointer' }}
         ></input>
       </Row>
+      <Row style={{ alignItems: 'center', marginTop: '20px' }}>
+        <label>Venue</label>
+        <Input
+          placeholder="e.g.: 213"
+          value={venue}
+          style={{ maxWidth: '65px', height: '23px', marginRight: '20px', marginLeft: '6px' }}
+          onChange={(e) => setVenue(e.target.value)}
+          maxLength={7}
+        />
+      </Row>
       <div style={{ height: '20px' }}></div>
       <Row>
         <WidgetButton
@@ -90,6 +101,14 @@ const WidgetPanel: React.FC<WidgetPanelProps> = ({ eventSlug, apiUrl }) => {
           darkTheme={darkTheme}
           keepShopping={keepShopping}
           type="checkoutWidget"
+        />
+        <ButtonSpacer />
+        <WidgetButton
+          eventSlug={venue}
+          hex={hex}
+          darkTheme={darkTheme}
+          keepShopping={keepShopping}
+          type="calendarWidget"
         />
       </Row>
     </>
