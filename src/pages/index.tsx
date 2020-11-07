@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-const Home = () => {
+const HomePage = () => {
   const [apiUrl, setApiUrl] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
   const [eventSlug, setEventSlug] = useState<string>('');
@@ -56,7 +56,7 @@ const Home = () => {
     document.title = 'widget-testing | ' + eventSlug;
   }, [eventSlug]);
 
-  const clickInput = (): void => {
+  const clickCreate = (): void => {
     if (!userInput) return;
     const parsedInput = userInput.split('/');
     setApiUrl(parsedInput[2]);
@@ -85,12 +85,12 @@ const Home = () => {
         <Col>
           <Row>
             <Input
-              placeholder={'https://local.showpass.com:9000/showpass-christmas-party/'}
+              placeholder={'https://www.showpass.com/showpass-christmas-party/'}
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
             />
             <ButtonSpacer />
-            <Button onClick={clickInput}>Create</Button>
+            <Button onClick={clickCreate}>Create</Button>
           </Row>
           {eventSlug && (
             <>
@@ -104,4 +104,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;
