@@ -94,9 +94,12 @@ const HomePage = () => {
         `}
       />
       <Container>
-        <Col>
-          <h2>Widget Testing Tool</h2>
-        </Col>
+        <div style={{ marginBottom: '22px' }}>
+          <span style={{ color: 'red' }}>
+            This tool is deprecated and no longer maintained please use{' '}
+            <a href="https://spwidgettool.netlify.app/">the new one</a> instead.
+          </span>
+        </div>
         <Col>
           <Row>
             <Input
