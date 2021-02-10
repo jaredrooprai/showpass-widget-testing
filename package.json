@@ -15,10 +15,12 @@
   "dependencies": {
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
+    "axios": "^0.21.1",
     "gatsby": "^2.24.66",
     "gatsby-plugin-emotion": "^4.3.12",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-query": "^3.8.2"
   },
   "devDependencies": {
     "prettier": "2.1.2"

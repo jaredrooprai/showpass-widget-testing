@@ -8,10 +8,11 @@ interface WidgetButtonProps {
   keepShopping: boolean;
   type: string;
   disabled?: boolean;
+  label: string;
 }
 
 const WidgetButton: React.FC<WidgetButtonProps> = (props) => {
-  const { id, hex, darkTheme, keepShopping, type, ...other } = props;
+  const { id, hex, darkTheme, keepShopping, type, label, ...other } = props;
   return (
     <Button
       {...other}
@@ -23,7 +24,7 @@ const WidgetButton: React.FC<WidgetButtonProps> = (props) => {
         })
       }
     >
-      {type}
+      {label}
     </Button>
   );
 };

@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 
+export const Title = styled.h5`
+  margin: 20px 0 8px 0;
+`;
+
 export const Container = styled.div`
   padding: 20px;
 `;
@@ -21,6 +25,7 @@ export const Button = styled.button`
 
 export const ButtonSpacer = styled.div`
   width: 13px;
+  height: 8px;
 `;
 
 export const Input = styled.input`

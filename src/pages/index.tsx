@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import WidgetPanel from '../components/WidgetPanel';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 import { Col, Row, Button, Input, Container, ButtonSpacer } from '../styled';
 import { Global, css } from '@emotion/core';
+import WidgetPanel from '../components/WidgetPanel';
 
 declare global {
   interface Window {
@@ -13,20 +15,32 @@ declare global {
 const HomePage = () => {
   const [apiUrl, setApiUrl] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
-  const [eventSlug, setEventSlug] = useState<string>('');
+  const [venueSlug, setVenueSlug] = useState<string>('');
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const slug = urlParams.get('event');
-    const api = urlParams.get('api');
-    if (slug && api) {
-      setEventSlug(slug);
-      setApiUrl(api);
-      setUserInput(`https://${api}/${slug}/`);
+  const { data: venueData, refetch } = useQuery(
+    ['venue', apiUrl, venueSlug],
+    () => axios.get(`https://${apiUrl}/api/public/venues/${venueSlug}/`),
+    {
+      enabled: false,
     }
-  }, []);
+  );
 
-  useEffect(() => {
+  // create button
+  const clickCreate = (): void => {
+    if (!userInput) return;
+    const parsedInput = userInput.split('/');
+    setApiUrl(parsedInput[2]);
+    setVenueSlug(parsedInput[4]);
+  };
+
+  // when venue slug changes
+  useEffect((): void => {
+    if (!venueSlug || !apiUrl) return;
+    refetch();
+  }, [venueSlug]);
+
+  // when api url changes
+  useEffect((): void => {
     if (!apiUrl) return;
     (function (window: Window, document, src) {
       let config = window.__shwps;
@@ -47,21 +61,6 @@ const HomePage = () => {
       x.parentNode.insertBefore(s, x);
     })(window, document, `https://${apiUrl}/static/dist/sdk.js`);
   }, [apiUrl]);
-
-  useEffect(() => {
-    if (eventSlug.length <= 0) {
-      document.title = 'widget-testing';
-      return;
-    }
-    document.title = 'widget-testing | ' + eventSlug;
-  }, [eventSlug]);
-
-  const clickCreate = (): void => {
-    if (!userInput) return;
-    const parsedInput = userInput.split('/');
-    setApiUrl(parsedInput[2]);
-    setEventSlug(parsedInput[3]);
-  };
 
   return (
     <>
@@ -92,10 +91,10 @@ const HomePage = () => {
             <ButtonSpacer />
             <Button onClick={clickCreate}>Create</Button>
           </Row>
-          {eventSlug && (
+          {venueData && (
             <>
               <div style={{ height: '40px' }}></div>
-              <WidgetPanel eventSlug={eventSlug} apiUrl={apiUrl} />
+              <WidgetPanel venueId={venueData.data.id} apiUrl={apiUrl} />
             </>
           )}
         </Col>
