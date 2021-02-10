@@ -17,7 +17,7 @@ const HomePage = () => {
   const [userInput, setUserInput] = useState<string>('');
   const [venueSlug, setVenueSlug] = useState<string>('');
 
-  const { data: venueData, refetch } = useQuery(
+  const { data: venueData, isLoading, refetch } = useQuery(
     ['venue', apiUrl, venueSlug],
     () => axios.get(`https://${apiUrl}/api/public/venues/${venueSlug}/`),
     {
@@ -33,10 +33,26 @@ const HomePage = () => {
     setVenueSlug(parsedInput[4]);
   };
 
-  // when venue slug changes
-  useEffect((): void => {
-    if (!venueSlug || !apiUrl) return;
+  // get current url params
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('venue');
+    const api = urlParams.get('api');
+    if (slug && api) {
+      setVenueSlug(slug);
+      setApiUrl(api);
+      setUserInput(`https://${api}/o/${slug}/`);
+    }
+  }, []);
+
+  // set page title
+  useEffect(() => {
     refetch();
+    if (!venueSlug.length) {
+      document.title = 'widget-testing';
+      return;
+    }
+    document.title = 'widget-testing | ' + venueSlug;
   }, [venueSlug]);
 
   // when api url changes
@@ -84,17 +100,22 @@ const HomePage = () => {
         <Col>
           <Row>
             <Input
-              placeholder={'https://www.showpass.com/showpass-christmas-party/'}
+              placeholder={'https://beta.showpass.com/o/rocket-rodeo/'}
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
             />
             <ButtonSpacer />
             <Button onClick={clickCreate}>Create</Button>
           </Row>
+          {isLoading && apiUrl && <p>loading...</p>}
           {venueData && (
             <>
               <div style={{ height: '40px' }}></div>
-              <WidgetPanel venueId={venueData.data.id} apiUrl={apiUrl} />
+              <WidgetPanel
+                venueSlug={venueData.data.slug}
+                venueId={venueData.data.id}
+                apiUrl={apiUrl}
+              />
             </>
           )}
         </Col>
